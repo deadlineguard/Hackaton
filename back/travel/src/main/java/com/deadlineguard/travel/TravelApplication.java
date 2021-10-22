@@ -9,11 +9,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
 import java.lang.StringBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
 @SpringBootApplication
 public class TravelApplication {
 
+	// в getmapping прописывается адрес, по которому можно получить данные
+	// здесь например GET запрос на http://localhost:8080/
 	@GetMapping("/")
 	public String index() throws java.io.IOException {
 		Document doc = Jsoup.connect("https://google.com/").get();
@@ -31,9 +35,31 @@ public class TravelApplication {
 		return someText.text();
 	}
 
+	// здесь ответ на GET запрос к адресу http://localhost:8080/test
+	// возвращаемый тип должен быть ObjectNode, чтобы вернуть JSON
 	@GetMapping("/test")
-	public String test() {
-		return "test";
+	public ObjectNode test()  throws java.io.IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode objectNode = mapper.createObjectNode();
+
+		// получится
+		// {
+		// 		"key": "value",
+		// 		"foo": "bar",
+		//      "number": 42
+		// }
+		objectNode.put("key", "value");
+		objectNode.put("foo", "bar");
+		objectNode.put("number", 42);
+
+		// получим данные с гугла
+		Document doc = Jsoup.connect("https://google.com/").get();
+		Element someText = doc.select(".ktLKi").first();
+
+		// во второй аргумент можно передавать строчку, которую пропарсили
+		objectNode.put("googleAnswer", someText.text());
+
+		return objectNode;
 	}
 
 	public static void main(String[] args) {
