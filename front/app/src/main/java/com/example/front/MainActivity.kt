@@ -1,11 +1,11 @@
 package com.example.front
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.SeekBar
+import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.Switch
-import android.widget.TextView
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     var isTrain: Boolean = false
@@ -22,6 +22,19 @@ class MainActivity : AppCompatActivity() {
         val switchOwnCar: Switch = findViewById(R.id.switchOwnCar)
         val seekPrice: SeekBar = findViewById(R.id.seekPrice)
         val textPrice: TextView = findViewById(R.id.textPrice)
+        val buttonDeparture: Button = findViewById(R.id.buttonDeparture)
+        val textDateDeparture: TextView = findViewById(R.id.textDateDeparture)
+        val buttonArrival: Button = findViewById(R.id.buttonArrival)
+        val textDateArrival: TextView = findViewById(R.id.textDateArrival)
+
+        // для календарика, который вызывается при нажатии кнопки
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        var departureDate: String
+        var arrivalDate: String
+
 
         // обработка нажатий на switch
         switchTrain.setOnCheckedChangeListener{ buttonView, isChecked ->
@@ -37,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             else isOwnCar = false
         }
 
+
         seekPrice.max = maxPrice // устанавливаем макс. цену
         seekPrice.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -45,5 +59,26 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
+
+
+        buttonDeparture.setOnClickListener{
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                // отображает дату в textview под кнопкой
+                departureDate = "" + dayOfMonth + "." + month + "." + year
+                textDateDeparture.setText(departureDate)
+            }, year, month, day)
+
+            dpd.show()
+        }
+
+        buttonArrival.setOnClickListener{
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                // отображает дату в textview под кнопкой
+                arrivalDate = "" + dayOfMonth + "." + month + "." + year
+                textDateArrival.setText(arrivalDate)
+            }, year, month, day)
+
+            dpd.show()
+        }
     }
 }
