@@ -1,5 +1,9 @@
 package com.deadlineguard.travel;
 
+<<<<<<< HEAD
+public class TravelApplication {
+	// nothing to see
+=======
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,4 +37,5 @@ public class TravelApplication {
 
 		return travel.getSuggestions(filter);
 	}
+>>>>>>> c3d45d82621d4d03064ab263e37a4db9e784483e
 }
