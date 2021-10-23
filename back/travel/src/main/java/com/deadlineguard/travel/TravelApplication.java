@@ -13,8 +13,8 @@ import java.lang.StringBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
-
-import javax.management.Query;
+import java.util.Date;
+import java.util.Calendar;
 
 @RestController
 @SpringBootApplication
@@ -24,11 +24,13 @@ public class TravelApplication {
 		SpringApplication.run(TravelApplication.class, args);
 	}
 
+	// пример запроса
+	// http://localhost:8080/?vehicle=Автомобиль&startDate=01.11.2021&endDate=31.11.2021&budget=10000&filter=minPrice
 	@GetMapping("/")
-	public String indus() throws java.io.IOException{
-		Document doc = Jsoup.connect("https://www.usue.ru/").get();
-		Element alltext = doc.select(".atext").first();
-		return alltext.text();
-	}
+	public ArrayList<ObjectNode> index(@RequestParam String vehicle, @RequestParam String startDate,
+		@RequestParam String endDate, @RequestParam int budget, @RequestParam String filter) throws java.io.IOException {
+		Travel travel = new Travel(vehicle, startDate, endDate, budget);
 
+		return travel.getSuggestions(filter);
+	}
 }

@@ -20,8 +20,12 @@ class MainActivity : AppCompatActivity() {
         val switchTrain: Switch = findViewById(R.id.switchTrain)
         val switchAirplane: Switch = findViewById(R.id.switchAirplane)
         val switchOwnCar: Switch = findViewById(R.id.switchOwnCar)
-        val seekPrice: SeekBar = findViewById(R.id.seekPrice)
-        val textPrice: TextView = findViewById(R.id.textPrice)
+
+        val seekMinPrice: SeekBar = findViewById(R.id.seekMinPrice)
+        val textMinPrice: TextView = findViewById(R.id.textMinPrice)
+        val seekMaxPrice: SeekBar = findViewById(R.id.seekMaxPrice)
+        val textMaxPrice: TextView = findViewById(R.id.textMaxPrice)
+
         val buttonDeparture: Button = findViewById(R.id.buttonDeparture)
         val textDateDeparture: TextView = findViewById(R.id.textDateDeparture)
         val buttonArrival: Button = findViewById(R.id.buttonArrival)
@@ -35,6 +39,10 @@ class MainActivity : AppCompatActivity() {
         var departureDate: String
         var arrivalDate: String
 
+        val editDays: EditText = findViewById(R.id.editDays)
+        val editHours: EditText = findViewById(R.id.editHours)
+
+        val mainButton: Button = findViewById(R.id.mainButton)
 
         // обработка нажатий на switch
         switchTrain.setOnCheckedChangeListener{ buttonView, isChecked ->
@@ -51,10 +59,18 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        seekPrice.max = maxPrice // устанавливаем макс. цену
-        seekPrice.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        seekMinPrice.max = maxPrice // устанавливаем макс. цену
+        seekMinPrice.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                textPrice.setText(progress.toString()) // дередаём textview значение прогресса
+                textMinPrice.setText("${progress.toString()} рублей") // передаём textview значение прогресса
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+        seekMaxPrice.max = maxPrice
+        seekMaxPrice.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                textMaxPrice.setText("${progress.toString()} рублей")
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
@@ -79,6 +95,19 @@ class MainActivity : AppCompatActivity() {
             }, year, month, day)
 
             dpd.show()
+        }
+
+        var days = editDays.getText().toString()
+
+        mainButton.setOnClickListener{
+            if (editDays.getText().toString().equals(""))
+            {
+                println(0)
+            }
+            else
+            {
+                println(days)
+            }
         }
     }
 }
