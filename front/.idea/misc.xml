@@ -3,10 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/Users/Maksim/AndroidStudioProjects/Hackaton/front/app/src/main/res/drawable/ic_icon.xml" value="0.2203125" />
         <entry key="..\:/Users/Maksim/AndroidStudioProjects/Hackaton/front/app/src/main/res/layout/activity_main.xml" value="0.22" />
+=======
+<<<<<<< HEAD
+        <entry key="..\:/Users/andre/AndroidStudioProjects/Hackaton/front/app/src/main/res/layout/activity_main.xml" value="0.264" />
+=======
+>>>>>>> 28f918d29e2dff9033493d4d69be46c204f601ae
         <entry key="..\:/Users/Maksim/AndroidStudioProjects/Hackaton/front/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2203125" />
         <entry key="..\:/Users/Maksim/AndroidStudioProjects/Hackaton/front/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2203125" />
+>>>>>>> 378f8a63931c5b6492c15802c009c6037e798d05
       </map>
     </option>
   </component>
