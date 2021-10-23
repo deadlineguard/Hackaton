@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.*
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import java.util.*
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         // Request a string response from the provided URL.
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener { response ->
-                    textView.text = "Response: %s".format(response.get("adultTicketPrice"))
+                    textViewOutput.text = "Response: %s".format(response.get("adultTicketPrice"))
                 },
                 Response.ErrorListener { error ->
                     // TODO: Handle error
