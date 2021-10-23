@@ -27,7 +27,8 @@ public class TravelApplication {
 	// пример запроса
 	// http://localhost:8080/?vehicle=Автомобиль&startDate=01.11.2021&endDate=31.11.2021&budget=10000&filter=minPrice
 	@GetMapping("/")
-	public ArrayList<ObjectNode> index(@RequestParam String vehicle, @RequestParam String startDate, @RequestParam String endDate, @RequestParam int budget, @RequestParam String filter) throws java.io.IOException {
+	public ArrayList<ObjectNode> index(@RequestParam String vehicle, @RequestParam String startDate,
+		@RequestParam String endDate, @RequestParam int budget, @RequestParam String filter) throws java.io.IOException {
 		Travel travel = new Travel(vehicle, startDate, endDate, budget);
 
 		return travel.getSuggestions(filter);

@@ -9,18 +9,24 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Travel {
     class Suggestion {
-        Integer price;
+        Integer adultTicketPrice;
+        Integer childrenTicketPrice;
         String startDate;
         String endDate;
 
-        public Suggestion(Integer price, String startDate, String endDate) {
-            this.price = price;
+        public Suggestion(Integer adultTicketPrice, Integer childrenTicketPrice, String startDate, String endDate) {
+            this.adultTicketPrice = adultTicketPrice;
+            this.childrenTicketPrice = childrenTicketPrice;
             this.startDate = startDate;
             this.endDate = endDate;
         }
 
-        public Integer getPrice() {
-            return this.price;
+        public Integer getAdultTicketPrice() {
+            return this.adultTicketPrice;
+        }
+
+        public Integer getChildrenTicketPrice() {
+            return this.childrenTicketPrice;
         }
 
         public String getStartDate() {
@@ -48,9 +54,9 @@ public class Travel {
     }
 
     void fetchSuggestions() {
-        this.suggestions.add(new Suggestion(1000, "15.11.2021", "16.11.2021"));
-        this.suggestions.add(new Suggestion(6000, "15.11.2021", "16.11.2021"));
-        this.suggestions.add(new Suggestion(2000, "15.11.2021", "16.11.2021"));
+        this.suggestions.add(new Suggestion(1000, 500, "15.11.2021", "16.11.2021"));
+        this.suggestions.add(new Suggestion(6000, 4000, "15.11.2021", "16.11.2021"));
+        this.suggestions.add(new Suggestion(2000, 1000, "15.11.2021", "16.11.2021"));
     }
 
     void filterSuggestions(String filter) {
@@ -59,7 +65,7 @@ public class Travel {
                 Collections.sort(this.suggestions, new Comparator<Suggestion>() {
                     @Override
                     public int compare(Suggestion a, Suggestion b) {
-                        return a.getPrice().compareTo(b.getPrice());
+                        return a.getAdultTicketPrice().compareTo(b.getAdultTicketPrice());
                     }
                 });
                 break;
@@ -77,7 +83,8 @@ public class Travel {
         for (int i = 0; i < suggestions.size(); i++) {
             ObjectNode suggestion = mapper.createObjectNode();
 
-            suggestion.put("price", this.suggestions.get(i).getPrice());
+            suggestion.put("adultTicketPrice", this.suggestions.get(i).getAdultTicketPrice());
+            suggestion.put("childrenTicketPrice", this.suggestions.get(i).getChildrenTicketPrice());
             suggestion.put("startDate", this.suggestions.get(i).getStartDate());
             suggestion.put("endDate", this.suggestions.get(i).getEndDate());
 
