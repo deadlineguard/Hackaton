@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
-    tools:context=".MainActivity"/>
-=======
+    android:background="@drawable/main_background"
     tools:context=".MainActivity">
 
     <TextView
@@ -14,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:alpha="123"
         android:fontFamily="sans-serif-black"
         android:text="Давайте составим маршрут вашего путешествия:"
         android:textSize="16sp"
@@ -137,4 +136,4 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonArrival" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> 28f918d29e2dff9033493d4d69be46c204f601ae
+
