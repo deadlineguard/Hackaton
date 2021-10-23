@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                     // TODO: Handle error
                 }
         )
-        queue.add(jsonObjectRequest)
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
 
         // вывод данных
         mainButton.setOnClickListener{
