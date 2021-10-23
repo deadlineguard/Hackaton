@@ -168,7 +168,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="36dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/buttonDeparture" />
@@ -180,18 +180,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/editDays"
         app:layout_constraintTop_toBottomOf="@+id/buttonDeparture" />
-
-    <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="442dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
