@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
-import android.widget.SeekBar.OnSeekBarChangeListener
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -14,7 +13,6 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     var isTrain: Boolean = false
     var isAirplane: Boolean = false
-    var isOwnCar: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         val switchTrain: Switch = findViewById(R.id.switchTrain)
         val switchAirplane: Switch = findViewById(R.id.switchAirplane)
-        val switchOwnCar: Switch = findViewById(R.id.switchOwnCar)
 
         val buttonDeparture: Button = findViewById(R.id.buttonDeparture)
         val textDateDeparture: TextView = findViewById(R.id.textDateDeparture)
@@ -54,10 +51,6 @@ class MainActivity : AppCompatActivity() {
         switchAirplane.setOnCheckedChangeListener{ buttonView, isChecked ->
             if(isChecked) isAirplane = true
             else isAirplane = false
-        }
-        switchOwnCar.setOnCheckedChangeListener{ buttonView, isChecked ->
-            if(isChecked) isOwnCar = true
-            else isOwnCar = false
         }
 
         buttonDeparture.setOnClickListener{
