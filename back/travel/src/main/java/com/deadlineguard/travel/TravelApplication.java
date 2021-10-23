@@ -13,8 +13,8 @@ import java.lang.StringBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
-
-import javax.management.Query;
+import java.util.Date;
+import java.util.Calendar;
 
 @RestController
 @SpringBootApplication
@@ -30,7 +30,7 @@ public class TravelApplication {
 	// http://localhost:8080/get-anapa-hotels?adultsNumber=2&childrenNumber=0
 	// где число взрослых и детей определяется параметрами
 	@GetMapping("/get-anapa-hotels")
-	public ArrayList<ObjectNode> getAnapa(@RequestParam int adultsNumber, @RequestParam int childrenNumber) throws java.io.IOException {
+	public ArrayList<ObjectNode> getAnapaHotels(@RequestParam int adultsNumber, @RequestParam int childrenNumber) throws java.io.IOException {
 		ObjectMapper mapper = new ObjectMapper();
 
 		Document doc = Jsoup.connect("https://www.booking.com/searchresults.ru.html?label=ruru-edge-ntp-topsites-curate-ana&sid=ff8afd0e18c7098c4494d785cf4f5dbe&aid=1535069&sb=1&src_elem=sb&error_url=https%3A%2F%2Fwww.booking.com%2Fdealspage.ru.html%3Faid%3D1535069%3Blabel%3Druru-edge-ntp-topsites-curate-ana%3Bsid%3Dff8afd0e18c7098c4494d785cf4f5dbe%3Btmpl%3Ddeal_finder%3Bsig%3Dv1OzaVKl4r%3B&order=price&lpsrc=sb&ss=%D0%B0%D0%BD%D0%B0%D0%BF%D0%B0&is_ski_area=0&checkin_year=2021&checkin_month=10&checkin_monthday=22&checkout_year=2021&checkout_month=10&checkout_monthday=23&no_rooms=1&group_adults=" + adultsNumber + "&group_children=" + childrenNumber + "&b_h4u_keep_filters=&from_sf=1").get();
@@ -64,4 +64,37 @@ public class TravelApplication {
 		return hotelNamesAndPrices;
 	}
 
+	@GetMapping("/get-anapa-trains")
+	public ArrayList<ObjectNode> getAnapaTrains() throws java.io.IOException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+
+		Document doc = Jsoup.connect("https://pzd-online.ru/runlist/moskva/anapa?date=" + calendar.getTimeInMillis() / 1000).get();
+		Elements trainNumber = doc.select(".c-run_short_re__train-number");
+
+		Elements sourceTime = doc.select(".с-run_short_re__time");
+		Elements sourceDate = doc.select(".с-run_short_re__date");
+
+		Elements destinationTime = doc.select(".с-run_short_re__time");
+		Elements destinationDate = doc.select(".с-run_short_re__date");
+
+		ArrayList<ObjectNode> trains = new ArrayList<>();
+
+		for (int i = 0; i < trainNumber.size(); i++) {
+			ObjectNode objectNode = mapper.createObjectNode();
+
+			objectNode.put("trainNumber", trainNumber.get(i).text());
+			objectNode.put("sourceTime", sourceTime.get(i).text());
+			objectNode.put("destinationTime", destinationTime.get(i).text());
+			objectNode.put("sourceDate", sourceDate.get(i).text());
+			objectNode.put("destinationDate", destinationDate.get(i).text());
+
+			trains.add(objectNode);
+		}
+
+		return trains;
+	}
 }
