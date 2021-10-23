@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     var isTrain: Boolean = false
     var isAirplane: Boolean = false
     var isOwnCar: Boolean = false
-    var maxPrice: Int = 1000 // нужно установить значение из парсинга
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +23,6 @@ class MainActivity : AppCompatActivity() {
         val switchTrain: Switch = findViewById(R.id.switchTrain)
         val switchAirplane: Switch = findViewById(R.id.switchAirplane)
         val switchOwnCar: Switch = findViewById(R.id.switchOwnCar)
-
-        val seekMinPrice: SeekBar = findViewById(R.id.seekMinPrice)
-        val textMinPrice: TextView = findViewById(R.id.textMinPrice)
-        val seekMaxPrice: SeekBar = findViewById(R.id.seekMaxPrice)
-        val textMaxPrice: TextView = findViewById(R.id.textMaxPrice)
 
         val buttonDeparture: Button = findViewById(R.id.buttonDeparture)
         val textDateDeparture: TextView = findViewById(R.id.textDateDeparture)
@@ -39,10 +37,14 @@ class MainActivity : AppCompatActivity() {
         var departureDate: String
         var arrivalDate: String
 
+        val editMin: EditText = findViewById(R.id.editMin)
+        val editMax: EditText = findViewById(R.id.editMax)
         val editDays: EditText = findViewById(R.id.editDays)
         val editHours: EditText = findViewById(R.id.editHours)
 
         val mainButton: Button = findViewById(R.id.mainButton)
+
+        val textViewOutput: TextView = findViewById(R.id.textViewOutput)
 
         // обработка нажатий на switch
         switchTrain.setOnCheckedChangeListener{ buttonView, isChecked ->
@@ -58,23 +60,6 @@ class MainActivity : AppCompatActivity() {
             else isOwnCar = false
         }
 
-
-        seekMinPrice.max = maxPrice // устанавливаем макс. цену
-        seekMinPrice.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                textMinPrice.setText("${progress.toString()} рублей") // передаём textview значение прогресса
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-        })
-        seekMaxPrice.max = maxPrice
-        seekMaxPrice.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                textMaxPrice.setText("${progress.toString()} рублей")
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-        })
 
 
         buttonDeparture.setOnClickListener{
@@ -97,17 +82,27 @@ class MainActivity : AppCompatActivity() {
             dpd.show()
         }
 
-        var days = editDays.getText().toString()
+        val queue = Volley.newRequestQueue(this)
+        val url = "http://localhost:8080/"
+        // Request a string response from the provided URL.
+        val stringRequest = StringRequest(Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                // Display the first 500 characters of the response string.
+                textViewOutput.text = "Response is: ${response.substring(0, 500)}"
+            },
+            Response.ErrorListener { textViewOutput.text = "That didn't work!" })
 
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest)
+
+
+
+        // вывод данных
         mainButton.setOnClickListener{
-            if (editDays.getText().toString().equals(""))
-            {
-                println(0)
-            }
-            else
-            {
-                println(days)
-            }
+            val days = editDays.getText().toString() // оптимальное кол-во дней на поездку
+            val hours = editHours.getText().toString() // оптимальное кол-во часов на поездку
+            val min = editMin.getText().toString() // минимальная цена поездки
+            val max = editMax.getText().toString() // максимальная цена поездки
         }
     }
 }
