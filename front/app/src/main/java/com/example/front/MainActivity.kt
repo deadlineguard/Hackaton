@@ -60,8 +60,6 @@ class MainActivity : AppCompatActivity() {
             else isOwnCar = false
         }
 
-
-
         buttonDeparture.setOnClickListener{
             val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 // отображает дату в textview под кнопкой
@@ -83,19 +81,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         val queue = Volley.newRequestQueue(this)
-        val url = "http://localhost:8080/"
+        val url = "http://192.168.65.75:8080/?vehicle=Автомобиль&startDate=01.11.2021&endDate=31.11.2021&budget=10000&filter=minPrice"
         // Request a string response from the provided URL.
         val stringRequest = StringRequest(Request.Method.GET, url,
             Response.Listener<String> { response ->
                 // Display the first 500 characters of the response string.
-                textViewOutput.text = "Response is: ${response.substring(0, 500)}"
+                textViewOutput.text = "Response is: ${response.substring(0, 250)}"
             },
-            Response.ErrorListener { textViewOutput.text = "That didn't work!" })
+            Response.ErrorListener { error -> textViewOutput.text = (error).toString() })
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
-
-
 
         // вывод данных
         mainButton.setOnClickListener{
