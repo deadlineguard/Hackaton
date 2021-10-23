@@ -11,6 +11,25 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import java.util.*
 
+public class MySingleton
+{
+    private static MySingleton _instance;
+
+    private MySingleton()
+    {
+
+    }
+
+    public static MySingleton getInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new MySingleton();
+        }
+        return _instance;
+    }
+}
+
 class MainActivity : AppCompatActivity() {
     var isTrain: Boolean = false
     var isAirplane: Boolean = false
