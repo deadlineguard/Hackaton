@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">front</string>
+    <string name="texTitle">/Давайте составим маршрут вашего путешествия:</string>
+    <string name="textView">Выберите транспорт, на котором хотите добраться до курорта:</string>
+    <string name="switchTrain">Поезд</string>
+    <string name="switchAirplane">Самолёт</string>
+    <string name="switch0wnCar">Машина</string>
+    <string name="textView2">Желаемая цена (руб):</string>
+    <string name="textPrice">0</string>
+    <string name="btnDeparture">Выбрать дату отправления</string>
+    <string name="btnArrival">Выбрать дату прибытия</string>
+    <string name="textView5">Желаемое время в пути:</string>
+    <string name="textView6">дней</string>
+    <string name="textView7">часов</string>
 </resources>
