@@ -83,15 +83,15 @@ class MainActivity : AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
         val url = "http://192.168.65.75:8080/?vehicle=Автомобиль&startDate=01.11.2021&endDate=31.11.2021&budget=10000&filter=minPrice"
         // Request a string response from the provided URL.
-        val stringRequest = StringRequest(Request.Method.GET, url,
-            Response.Listener<String> { response ->
-                // Display the first 500 characters of the response string.
-                textViewOutput.text = "Response is: ${response.substring(0, 250)}"
-            },
-            Response.ErrorListener { error -> textViewOutput.text = (error).toString() })
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest)
+        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
+                Response.Listener { response ->
+                    textView.text = "Response: %s".format(response.get("adultTicketPrice"))
+                },
+                Response.ErrorListener { error ->
+                    // TODO: Handle error
+                }
+        )
+        queue.add(jsonObjectRequest)
 
         // вывод данных
         mainButton.setOnClickListener{
