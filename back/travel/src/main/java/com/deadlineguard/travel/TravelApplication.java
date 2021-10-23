@@ -1,9 +1,5 @@
 package com.deadlineguard.travel;
 
-<<<<<<< HEAD
-public class TravelApplication {
-	// nothing to see
-=======
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +27,10 @@ public class TravelApplication {
 	// пример запроса
 	// http://localhost:8080/?vehicle=Автомобиль&startDate=01.11.2021&endDate=31.11.2021&budget=10000&filter=minPrice
 	@GetMapping("/")
-	public ArrayList<ObjectNode> index(@RequestParam String vehicle, @RequestParam String startDate, @RequestParam String endDate, @RequestParam int budget, @RequestParam String filter) throws java.io.IOException {
+	public ArrayList<ObjectNode> index(@RequestParam String vehicle, @RequestParam String startDate,
+		@RequestParam String endDate, @RequestParam int budget, @RequestParam String filter) throws java.io.IOException {
 		Travel travel = new Travel(vehicle, startDate, endDate, budget);
 
 		return travel.getSuggestions(filter);
 	}
->>>>>>> c3d45d82621d4d03064ab263e37a4db9e784483e
 }
