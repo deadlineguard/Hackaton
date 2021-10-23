@@ -2,22 +2,24 @@ package com.deadlineguard.travel;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Travel {
     class Suggestion {
-        int price;
+        Integer price;
         String startDate;
         String endDate;
 
-        public Suggestion(int price, String startDate, String endDate) {
+        public Suggestion(Integer price, String startDate, String endDate) {
             this.price = price;
             this.startDate = startDate;
             this.endDate = endDate;
         }
 
-        public int getPrice() {
+        public Integer getPrice() {
             return this.price;
         }
 
@@ -47,14 +49,30 @@ public class Travel {
 
     void fetchSuggestions() {
         this.suggestions.add(new Suggestion(1000, "15.11.2021", "16.11.2021"));
+        this.suggestions.add(new Suggestion(6000, "15.11.2021", "16.11.2021"));
+        this.suggestions.add(new Suggestion(2000, "15.11.2021", "16.11.2021"));
     }
 
-    public ArrayList<ObjectNode> getSuggestions() {
+    void filterSuggestions(String filter) {
+        switch (filter) {
+            case "minPrice":
+                Collections.sort(this.suggestions, new Comparator<Suggestion>() {
+                    @Override
+                    public int compare(Suggestion a, Suggestion b) {
+                        return a.getPrice().compareTo(b.getPrice());
+                    }
+                });
+                break;
+        }
+    }
+
+    public ArrayList<ObjectNode> getSuggestions(String filter) {
         ObjectMapper mapper = new ObjectMapper();
 
         ArrayList<ObjectNode> suggestionsNodes = new ArrayList<>();
 
         fetchSuggestions();
+        filterSuggestions(filter);
 
         for (int i = 0; i < suggestions.size(); i++) {
             ObjectNode suggestion = mapper.createObjectNode();
